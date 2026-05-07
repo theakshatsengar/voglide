@@ -1,0 +1,49 @@
+{
+  "name": "voglide-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "main": "electron/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "concurrently -k \"vite --port 5173\" \"wait-on http://localhost:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "electron:dist": "npm run build && electron-builder",
+    "backend:dist": "pyinstaller --onefile --name voglide-backend --workpath ../backend/build --distpath ../backend/dist ../backend/run_transcription.py"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/react": "^18.2.67",
+    "@types/react-dom": "^18.2.23",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^29.4.0",
+    "electron-builder": "^24.13.3",
+    "electron-rebuild": "^3.2.9",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.voglide.app",
+    "productName": "voglide",
+    "files": [
+      "dist/**",
+      "electron/**"
+    ],
+    "extraResources": [
+      {
+        "from": "../backend/dist/voglide-backend",
+        "to": "backend/voglide-backend"
+      }
+    ],
+    "mac": {
+      "target": "dmg"
+    }
+  }
+}

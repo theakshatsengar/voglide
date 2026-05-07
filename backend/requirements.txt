@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+mlx-whisper
+numpy
+sounddevice
